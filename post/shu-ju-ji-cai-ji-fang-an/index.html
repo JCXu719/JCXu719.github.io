@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>数据集采集方案 | 设计文档博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://jcxu719.github.io/favicon.ico?v=1727066699688">
+<link rel="stylesheet" href="https://jcxu719.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+一、线下采集的准备
+
+1.1 软硬件系统的准备
+1.2 志愿审核报备
+1.3 志愿发布和志愿者招募
+
+
+二、线下采集的具体安排
+
+2.1 线下采集的地点、时间和人员安排
+2.2 安排具体示例
+
+
+三、采集结束的后续工作
+
+3.1 数据审核..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://jcxu719.github.io">
+        <img src="https://jcxu719.github.io/images/avatar.png?v=1727066699688" class="site-logo">
+        <h1 class="site-title">设计文档博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      多模态自动人格评测软件系统
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://jcxu719.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">数据集采集方案</h2>
+            <div class="post-date">2024-09-09</div>
+            
+            <div class="post-content" v-pre>
+              <p><ul class="markdownIt-TOC">
+<li><a href="#%E4%B8%80-%E7%BA%BF%E4%B8%8B%E9%87%87%E9%9B%86%E7%9A%84%E5%87%86%E5%A4%87">一、线下采集的准备</a>
+<ul>
+<li><a href="#11-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%87%86%E5%A4%87">1.1 软硬件系统的准备</a></li>
+<li><a href="#12-%E5%BF%97%E6%84%BF%E5%AE%A1%E6%A0%B8%E6%8A%A5%E5%A4%87">1.2 志愿审核报备</a></li>
+<li><a href="#13-%E5%BF%97%E6%84%BF%E5%8F%91%E5%B8%83%E5%92%8C%E5%BF%97%E6%84%BF%E8%80%85%E6%8B%9B%E5%8B%9F">1.3 志愿发布和志愿者招募</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E7%BA%BF%E4%B8%8B%E9%87%87%E9%9B%86%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%89%E6%8E%92">二、线下采集的具体安排</a>
+<ul>
+<li><a href="#21-%E7%BA%BF%E4%B8%8B%E9%87%87%E9%9B%86%E7%9A%84%E5%9C%B0%E7%82%B9-%E6%97%B6%E9%97%B4%E5%92%8C%E4%BA%BA%E5%91%98%E5%AE%89%E6%8E%92">2.1 线下采集的地点、时间和人员安排</a></li>
+<li><a href="#22-%E5%AE%89%E6%8E%92%E5%85%B7%E4%BD%93%E7%A4%BA%E4%BE%8B">2.2 安排具体示例</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E9%87%87%E9%9B%86%E7%BB%93%E6%9D%9F%E7%9A%84%E5%90%8E%E7%BB%AD%E5%B7%A5%E4%BD%9C">三、采集结束的后续工作</a>
+<ul>
+<li><a href="#31-%E6%95%B0%E6%8D%AE%E5%AE%A1%E6%A0%B8">3.1 数据审核</a></li>
+<li><a href="#32-%E5%BF%97%E6%84%BF%E6%97%B6%E9%95%BF%E6%88%90%E7%BB%A9%E6%8F%90%E4%BA%A4">3.2 志愿时长成绩提交</a></li>
+</ul>
+</li>
+</ul>
+</p>
+<h1 id="一-线下采集的准备">一、线下采集的准备</h1>
+<h2 id="11-软硬件系统的准备">1.1 软硬件系统的准备</h2>
+<p>需要准备如下的软硬件系统。</p>
+<table>
+<thead>
+<tr>
+<th>需求类型</th>
+<th>具体内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>硬件</td>
+<td>服务器、电脑（含摄像头、耳机，摄像头可以拍摄720p视频，耳机正常且含麦克风）</td>
+</tr>
+<tr>
+<td>软件</td>
+<td>网页系统</td>
+</tr>
+</tbody>
+</table>
+<p>对于硬件系统不做过多的要求，测试前验证正常即可，软件系统至少完成如下的内容</p>
+<table>
+<thead>
+<tr>
+<th>功能模块</th>
+<th>功能实现（开发文档内容）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>注册和登录功能</td>
+<td>1.1 1.2 1.3 基本的注册和登录</td>
+</tr>
+<tr>
+<td>信息管理</td>
+<td>2.1 基本的查看功能</td>
+</tr>
+<tr>
+<td>数据采集</td>
+<td>3.1 3.2 历史记录可以只存放在数据库中暂时不向志愿者展示</td>
+</tr>
+<tr>
+<td>后端接口</td>
+<td>验证码接口、人脸检测接口、语音识别接口（音高、说话内容）问卷提交和计算接口</td>
+</tr>
+</tbody>
+</table>
+<h2 id="12-志愿审核报备">1.2 志愿审核报备</h2>
+<p>志愿需要向团委报备并发布</p>
+<table>
+<thead>
+<tr>
+<th>校区</th>
+<th>学院/系负责人</th>
+<th>团队志愿负责人</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>翡翠湖校区</td>
+<td>待定</td>
+<td>待定</td>
+</tr>
+<tr>
+<td>屯溪路校区</td>
+<td>待定</td>
+<td>待定</td>
+</tr>
+<tr>
+<td>宣城校区</td>
+<td>待定</td>
+<td>待定</td>
+</tr>
+</tbody>
+</table>
+<h2 id="13-志愿发布和志愿者招募">1.3 志愿发布和志愿者招募</h2>
+<p>志愿发布方式有两种：第二课堂和各学院的志愿发布群。志愿发布群相比于第二课堂更加灵活一下。<br>
+合肥宣城可暂时对半采集。</p>
+<table>
+<thead>
+<tr>
+<th>校区</th>
+<th>招募方式</th>
+<th>招募人数</th>
+<th>团队志愿负责人</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>翡翠湖校区</td>
+<td>待定</td>
+<td>待定</td>
+<td>待定</td>
+</tr>
+<tr>
+<td>屯溪路校区</td>
+<td>待定</td>
+<td>待定</td>
+<td>待定</td>
+</tr>
+<tr>
+<td>宣城校区</td>
+<td>志愿群发布</td>
+<td>待定</td>
+<td>待定</td>
+</tr>
+</tbody>
+</table>
+<h1 id="二-线下采集的具体安排">二、线下采集的具体安排</h1>
+<h2 id="21-线下采集的地点-时间和人员安排">2.1 线下采集的地点、时间和人员安排</h2>
+<p><strong>采集地点</strong>：线下采集尽量选择空旷安静的大教室/会议厅。由于需要尽量保持各被采集者之间互不干扰。<br>
+<strong>采集人员</strong>：一个教室/会议厅容纳6位参与者以及1名管理员（具体的参与者人数可以根据教室大小进行调整）<br>
+<strong>采集时间</strong>：周末采集，1小时采集1批，所有采集者均采集完成后，管理员可以提前离开</p>
+<h2 id="22-安排具体示例">2.2 安排具体示例</h2>
+<p>以宣城校区的一个周末的一天为例，借用2间教室，每间教室容纳6人，共可以招募72人，管理员3人<br>
+为了提高效率，可以借用更多教室，尽快采集完成</p>
+<table>
+<thead>
+<tr>
+<th>时间点</th>
+<th>教室</th>
+<th>采集人数</th>
+<th>管理员</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9:00-10:00</td>
+<td>2间教室</td>
+<td>12</td>
+<td>A B</td>
+</tr>
+<tr>
+<td>10:00-11:00</td>
+<td>2间教室</td>
+<td>12</td>
+<td>A B</td>
+</tr>
+<tr>
+<td>11:00-12:00</td>
+<td>2间教室</td>
+<td>12</td>
+<td>C D</td>
+</tr>
+<tr>
+<td>15:00-16:00</td>
+<td>2间教室</td>
+<td>12</td>
+<td>C D</td>
+</tr>
+<tr>
+<td>16:00-17:00</td>
+<td>2间教室</td>
+<td>12</td>
+<td>E F</td>
+</tr>
+<tr>
+<td>17:00-18:00</td>
+<td>2间教室</td>
+<td>12</td>
+<td>E F</td>
+</tr>
+<tr>
+<td>总数</td>
+<td>2间教室</td>
+<td>72人</td>
+<td>6人</td>
+</tr>
+</tbody>
+</table>
+<h1 id="三-采集结束的后续工作">三、采集结束的后续工作</h1>
+<h2 id="31-数据审核">3.1 数据审核</h2>
+<p>数据由内部成员分工审核</p>
+<h2 id="32-志愿时长成绩提交">3.2 志愿时长成绩提交</h2>
+<p><strong>志愿时长奖励</strong>：完成本志愿奖励1小时，数据质量较高额外奖励1小时（即2小时）<br>
+<strong>志愿时长公示和提交</strong>：由协助志愿开展的青协进行公示和成绩提交</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://jcxu719.github.io/post/wang-ye-xi-tong/">
+                  <h3 class="post-title">
+                    网页系统需求设计文档（完整）
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

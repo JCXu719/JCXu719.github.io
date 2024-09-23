@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>网页系统需求设计文档（线下采集） | 设计文档博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://jcxu719.github.io/favicon.ico?v=1727066699688">
+<link rel="stylesheet" href="https://jcxu719.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="仅线下采集部分，后期开发请看新版本文档
+
+
+前言
+一、注册和登录功能
+
+1.1 用户类别
+1.2 普通用户注册
+
+1.2.1 设计思路
+
+（1）用户信息
+（2）身份验证方式
+
+
+1.2.2 前端功能
+1.2.3 后端功能
+
+
+1.3 普通用..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://jcxu719.github.io">
+        <img src="https://jcxu719.github.io/images/avatar.png?v=1727066699688" class="site-logo">
+        <h1 class="site-title">设计文档博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      多模态自动人格评测软件系统
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://jcxu719.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">网页系统需求设计文档（线下采集）</h2>
+            <div class="post-date">2024-09-15</div>
+            
+            <div class="post-content" v-pre>
+              <p>仅线下采集部分，后期开发请看新版本文档</p>
+<!-- more -->
+<p><ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E4%B8%80-%E6%B3%A8%E5%86%8C%E5%92%8C%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD">一、注册和登录功能</a>
+<ul>
+<li><a href="#11-%E7%94%A8%E6%88%B7%E7%B1%BB%E5%88%AB">1.1 用户类别</a></li>
+<li><a href="#12-%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E6%B3%A8%E5%86%8C">1.2 普通用户注册</a>
+<ul>
+<li><a href="#121-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF">1.2.1 设计思路</a>
+<ul>
+<li><a href="#1%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF">（1）用户信息</a></li>
+<li><a href="#2%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E6%96%B9%E5%BC%8F">（2）身份验证方式</a></li>
+</ul>
+</li>
+<li><a href="#122-%E5%89%8D%E7%AB%AF%E5%8A%9F%E8%83%BD">1.2.2 前端功能</a></li>
+<li><a href="#123-%E5%90%8E%E7%AB%AF%E5%8A%9F%E8%83%BD">1.2.3 后端功能</a></li>
+</ul>
+</li>
+<li><a href="#13-%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95">1.3 普通用户登录</a>
+<ul>
+<li><a href="#131-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF">1.3.1 设计思路</a></li>
+<li><a href="#132-%E5%89%8D%E7%AB%AF%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0">1.3.2 前端功能实现</a></li>
+<li><a href="#133-%E5%90%8E%E7%AB%AF%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0">1.3.3 后端功能实现</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD">二、信息管理功能</a>
+<ul>
+<li><a href="#21-%E4%B8%AA%E4%BA%BA%E5%9F%BA%E7%A1%80%E4%BF%A1%E6%81%AF%E6%9F%A5%E7%9C%8B">2.1 个人基础信息查看</a>
+<ul>
+<li><a href="#211-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF">2.1.1 设计思路</a></li>
+<li><a href="#212-%E5%89%8D%E7%AB%AF%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0">2.1.2 前端功能实现</a></li>
+<li><a href="#213-%E5%90%8E%E7%AB%AF%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0">2.1.3 后端功能实现</a></li>
+</ul>
+</li>
+<li><a href="#22-%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9">2.2 个人信息修改</a>
+<ul>
+<li><a href="#221-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF">2.2.1 设计思路</a></li>
+<li><a href="#222-%E5%89%8D%E7%AB%AF%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0">2.2.2 前端功能实现</a></li>
+<li><a href="#223-%E5%90%8E%E7%AB%AF%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0">2.2.3 后端功能实现</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E7%94%A8%E6%88%B7%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD">三、用户基础功能</a>
+<ul>
+<li><a href="#31-%E5%AF%BC%E8%88%AA%E5%8A%9F%E8%83%BD">3.1 导航功能</a>
+<ul>
+<li><a href="#311-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF">3.1.1 设计思路</a></li>
+<li><a href="#312-%E5%89%8D%E7%AB%AF%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1">3.1.2 前端功能设计</a></li>
+<li><a href="#313-%E5%90%8E%E7%AB%AF%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1">3.1.3 后端功能设计</a></li>
+</ul>
+</li>
+<li><a href="#32-%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD%E6%A0%B8%E5%BF%83">3.2 数据采集功能（核心）</a>
+<ul>
+<li><a href="#321-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF">3.2.1 设计思路</a>
+<ul>
+<li><a href="#1%E9%87%87%E9%9B%86%E5%89%8D">（1）采集前</a></li>
+<li><a href="#2%E9%87%87%E9%9B%86%E4%B8%AD">（2）采集中</a></li>
+<li><a href="#3%E9%87%87%E9%9B%86%E5%AE%8C%E6%88%90">（3）采集完成</a></li>
+<li><a href="#4%E6%A3%80%E6%9F%A5%E6%9C%BA%E5%88%B6%E7%9B%AE%E5%89%8D%E4%B8%8D%E5%AE%8C%E5%96%84">（4）检查机制（目前不完善）</a></li>
+</ul>
+</li>
+<li><a href="#322-%E5%89%8D%E7%AB%AF%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0">3.2.2 前端功能实现</a></li>
+<li><a href="#323-%E5%90%8E%E7%AB%AF%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0">3.2.3 后端功能实现</a></li>
+</ul>
+</li>
+<li><a href="#33-%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E5%AE%A1%E6%A0%B8%E8%BF%9B%E5%BA%A6">3.3 数据采集历史记录/审核进度</a>
+<ul>
+<li><a href="#331-%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF">3.3.1 设计思路</a></li>
+<li><a href="#332-%E5%89%8D%E7%AB%AF%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0">3.3.2 前端功能实现</a></li>
+<li><a href="#333-%E5%90%8E%E7%AB%AF%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0">3.3.3 后端功能实现</a></li>
+</ul>
+</li>
+<li><a href="#34-%E4%BA%BA%E6%A0%BC%E8%AF%84%E6%B5%8B%E7%9B%AE%E5%89%8D%E5%8F%AF%E7%9C%81%E7%95%A5">3.4 人格评测【目前可省略】</a></li>
+<li><a href="#35-%E4%BA%BA%E6%A0%BC%E7%9F%A5%E8%AF%86%E7%A7%91%E6%99%AE%E7%9B%AE%E5%89%8D%E5%8F%AF%E7%9C%81%E7%95%A5">3.5 人格知识科普【目前可省略】</a></li>
+</ul>
+</li>
+</ul>
+</p>
+<h1 id="前言">前言</h1>
+<p>本软件系统使用网页系统进行开发，一方面便于用户使用并采集、相对较高质量的数据（摄像头固定），另一方面便于后台进行数据审核和管理，可以管理微信小程序和网页平台的后台。</p>
+<p>网页系统具备如下的基本功能：一、注册和登录功能；二、用户信息管理功能；三、用户基础功能（导航功能、数据采集功能）。</p>
+<h1 id="一-注册和登录功能">一、注册和登录功能</h1>
+<h2 id="11-用户类别">1.1 用户类别</h2>
+<p>目前计划将用户分为如下的3个类别：<strong>普通用户、审核员、高级管理员</strong>。不同用户类别可以接触到的功能和权限也有所不同，三者具体的差异见下表</p>
+<table>
+<thead>
+<tr>
+<th>用户类别</th>
+<th>权限级别</th>
+<th>用户功能</th>
+<th>权限获取方式</th>
+<th>对应人群</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通用户</td>
+<td>低</td>
+<td>仅可接触基本的采集功能</td>
+<td>注册默认</td>
+<td>普通采集志愿者</td>
+</tr>
+<tr>
+<td>审核员</td>
+<td>中</td>
+<td>普通用户基础上，加入数据审核功能</td>
+<td>后台白名单添加</td>
+<td>可招募志愿者，培训后作为审核员</td>
+</tr>
+<tr>
+<td>高级管理员</td>
+<td>高</td>
+<td>审核员基础上，可管理所有后台信息</td>
+<td>白名单添加</td>
+<td>团队内部成员</td>
+</tr>
+</tbody>
+</table>
+<h2 id="12-普通用户注册">1.2 普通用户注册</h2>
+<h3 id="121-设计思路">1.2.1 设计思路</h3>
+<h4 id="1用户信息">（1）用户信息</h4>
+<p>普通用户注册需要考虑注册时的信息，目前只考虑校内采集的话，至少需要如下的信息：学号、姓名、班级、密码、用户名、手机号、QQ、出生年月、性别、文化水平、用户权限）。</p>
+<p>各字段信息要求如下表，下表中的所有字段均必须要求填写</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>信息作用/备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户名</td>
+<td>20字符以内</td>
+</tr>
+<tr>
+<td>学号</td>
+<td>限定10仅数字字符</td>
+</tr>
+<tr>
+<td>姓名</td>
+<td>限定2-4字的姓名</td>
+</tr>
+<tr>
+<td>密码</td>
+<td>长度8-20，限定大写、小写字母和数字均有</td>
+</tr>
+<tr>
+<td>班级</td>
+<td>无特别要求，20字符以内</td>
+</tr>
+<tr>
+<td>手机号</td>
+<td>限定11位数字，要求接收验证码验证</td>
+</tr>
+<tr>
+<td>QQ</td>
+<td>限定5-12位数字</td>
+</tr>
+<tr>
+<td>出生年月</td>
+<td>可选择，精确到月即可</td>
+</tr>
+<tr>
+<td>性别</td>
+<td>单选，男or女</td>
+</tr>
+<tr>
+<td>文化水平</td>
+<td>单选，A.小学及以下 B.初高中 C.本科（默认） D.硕博研究生（在读或毕业）</td>
+</tr>
+<tr>
+<td>用户权限</td>
+<td>注册时隐藏不可选择，三个值123分别对应普通用户、审核员和管理员，默认为1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2身份验证方式">（2）身份验证方式</h4>
+<p>对上述的信息主要采用如下的几种方法检验，见下表</p>
+<table>
+<thead>
+<tr>
+<th>验证方法</th>
+<th>验证内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一般逻辑/正则表达式检验</td>
+<td>用户名、学号、姓名、密码、学院班级、手机号、QQ可检验长度和存在的字符是否符合规定</td>
+</tr>
+<tr>
+<td>短信验证码检验</td>
+<td>手机接收短信验证码检验手机号码有效性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="122-前端功能">1.2.2 前端功能</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 用户注册界面设计</td>
+<td>设计一个用户注册的界面，包含必要的表单元素，同时可链接到登录界面（1.3）</td>
+</tr>
+<tr>
+<td>② 一般逻辑/正则表达式检验</td>
+<td>前端对表单中填写的信息设计检测逻辑，进行初步检测</td>
+</tr>
+</tbody>
+</table>
+<h3 id="123-后端功能">1.2.3 后端功能</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①接收表单数据</td>
+<td>接收前端的表单数据，存放到数据库中</td>
+</tr>
+<tr>
+<td>②验证重复功能</td>
+<td>后台数据库中查询是否存在重复的用户信息，若存在，拒绝用户注册新账户，并提示是否需要直接登录？</td>
+</tr>
+<tr>
+<td>③短信验证码发送</td>
+<td>向用户的手机发送验证码并验证，4位数字验证码</td>
+</tr>
+</tbody>
+</table>
+<h2 id="13-普通用户登录">1.3 普通用户登录</h2>
+<h3 id="131-设计思路">1.3.1 设计思路</h3>
+<p>登录所需的信息为：<strong>用户名/手机号/学号（三选一即可）</strong>、密码。<br>
+前端提交表单前需要验证是用户名、学号还是手机号，再调用后端查询</p>
+<h3 id="132-前端功能实现">1.3.2 前端功能实现</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①用户登录界面设计</td>
+<td>设计一个用户登录的界面，包含必要的表单元素，同时可链接到注册界面（1.2）</td>
+</tr>
+<tr>
+<td>②学号手机号验证</td>
+<td>设计方法判断是学号or手机号or其他错误情况</td>
+</tr>
+</tbody>
+</table>
+<h3 id="133-后端功能实现">1.3.3 后端功能实现</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①验证账户是否存在</td>
+<td>后台数据库中查询是否存在用户信息，若存在，根据学号密码是否一致判断是否可以登录，若不存在，并提示密码错误或是否需要注册？</td>
+</tr>
+</tbody>
+</table>
+<h1 id="二-信息管理功能">二、信息管理功能</h1>
+<h2 id="21-个人基础信息查看">2.1 个人基础信息查看</h2>
+<h3 id="211-设计思路">2.1.1 设计思路</h3>
+<p>在信息管理页面查看1.2中注册时的信息，学号、姓名、班级、密码、用户名、手机号、QQ、出生年月、性别、文化水平、用户权限</p>
+<h3 id="212-前端功能实现">2.1.2 前端功能实现</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 设计个人信息页面</td>
+<td>难度不大，关键是需要合理的布局</td>
+</tr>
+</tbody>
+</table>
+<h3 id="213-后端功能实现">2.1.3 后端功能实现</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 云端数据库查询</td>
+<td>将云端数据库的信息展示到前端的各个元素上</td>
+</tr>
+</tbody>
+</table>
+<h2 id="22-个人信息修改">2.2 个人信息修改</h2>
+<h3 id="221-设计思路">2.2.1 设计思路</h3>
+<p>为了简化，<strong>线下采集暂时不提供修改功能</strong>，可在特定时间段联系管理员修改</p>
+<h3 id="222-前端功能实现">2.2.2 前端功能实现</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①前期界面设计</td>
+<td>提供一个界面告知用户管理员信息即可</td>
+</tr>
+<tr>
+<td>②后期界面设计</td>
+<td>个人信息展示界面，不同信息字段的旁边加入修改按键，此后跳转到手机号验证修改界面</td>
+</tr>
+</tbody>
+</table>
+<h3 id="223-后端功能实现">2.2.3 后端功能实现</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①短信验证码发送</td>
+<td>向用户的手机发送验证码并验证，4位数字验证码</td>
+</tr>
+</tbody>
+</table>
+<h1 id="三-用户基础功能">三、用户基础功能</h1>
+<h2 id="31-导航功能">3.1 导航功能</h2>
+<h3 id="311-设计思路">3.1.1 设计思路</h3>
+<p>用户登录后显示的主页界面需要提供导航功能，告诉用户小程序有哪些基础的功能。设计时，需要注意展示的元素，以及与其他界面的链接.</p>
+<h3 id="312-前端功能设计">3.1.2 前端功能设计</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 主页导航界面设计</td>
+<td>设计一些元素（例如轮播图、四宫格按键等）</td>
+</tr>
+<tr>
+<td>② 控制逻辑设计</td>
+<td>设计元素的动作等（例如轮播图的变化、按键按下时的界面跳转等）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="313-后端功能设计">3.1.3 后端功能设计</h3>
+<p>待补充</p>
+<h2 id="32-数据采集功能核心">3.2 数据采集功能（核心）</h2>
+<h3 id="321-设计思路">3.2.1 设计思路</h3>
+<p>切换到数据采集界面，按如下的流程展开数据采集任务。</p>
+<p>具体的采集流程先前的汇报中已经详细介绍过，可参考发在群里的部分</p>
+<h4 id="1采集前">（1）采集前</h4>
+<p>刚切换到采集任务的界面时，仅对任务进行简单的介绍；用户点击了解详情后，将采集任务的须知告知用户，且采集前需要用户签名，表示对这些须知知情。<br>
+签名后进行设备检查，确认摄像头和麦克风无问题后开始数据采集，摄像头检查通过人脸识别实现（可使用1.2中的接口），麦克风检查通过检测分贝（？）实现。</p>
+<h4 id="2采集中">（2）采集中</h4>
+<p>正式进入采集界面，根据基本流程采集：视频刺激（看一段10分钟视频）、回答问题（回答5个日常小问题）、墨迹测试（看墨迹回答问题）、填写量表（BFI-2量表）</p>
+<h4 id="3采集完成">（3）采集完成</h4>
+<p>完成采集流程后，提示采集完成的时间，并告知用户审核通过后会发放志愿时长奖励</p>
+<h4 id="4检查机制目前不完善">（4）检查机制（目前不完善）</h4>
+<p>采集过程中，检查如下三项条件<br>
+1）人脸是否在摄像头范围内<br>
+2）麦克风是否有声音<br>
+3）用户是否切屏<br>
+检查视频刺激/回答问题/墨迹测试阶段，具体检查机制后续进行补充</p>
+<h3 id="322-前端功能实现">3.2.2 前端功能实现</h3>
+<p>下列界面设计时，注意各界面之间的切换（可以使用按钮切换或倒计时自动切换）</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①宣传界面设计</td>
+<td>着重宣传特点</td>
+</tr>
+<tr>
+<td>②采集须知界面设计</td>
+<td>界面上要添置一个画板，让用户签名*（网页版可以让用户上传签名图片）*</td>
+</tr>
+<tr>
+<td>③设备检查界面</td>
+<td>提供摄像头和麦克风检查的元素。</td>
+</tr>
+<tr>
+<td>④视频刺激界面设计</td>
+<td>显示提示词、视频以及观看建议</td>
+</tr>
+<tr>
+<td>⑤回答问题界面设计</td>
+<td>显示当前问题以及回答问题的倒计时，需要控制好回答问题时的逻辑</td>
+</tr>
+<tr>
+<td>⑥墨迹测试界面设计</td>
+<td>类似回答问题界面设计：显示当前墨迹的图片以及回答问题的倒计时，需要控制好回答问题时的逻辑</td>
+</tr>
+<tr>
+<td>⑦BFI-2量表填写设计</td>
+<td>合理安排表单的元素样式和提示内容。</td>
+</tr>
+<tr>
+<td>⑧完成采集界面设计</td>
+<td>提示采集已经完成以及一些信息（日期、采集时间等），并提供返回主页的导航按键</td>
+</tr>
+</tbody>
+</table>
+<h3 id="323-后端功能实现">3.2.3 后端功能实现</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①云端数据传输设计</td>
+<td>前端交互点击按钮后，将文本、图像、视频等数据传输到云端服务器或本地，必要时返回传输的数据</td>
+</tr>
+<tr>
+<td>②云端数据传输具体落实的地方</td>
+<td>3.2.2中的②用户签名照片上传，3.2.2中的④将回答问题阶段的视频保存并上传，3.2.2中的⑤将墨迹测试阶段的视频保存并上传。</td>
+</tr>
+<tr>
+<td>③数据库操作</td>
+<td>3.2.2中的⑥将量表填写信息存放在数据库中，3.2.2中的⑦将本次数据采集的信息存放在数据库中</td>
+</tr>
+</tbody>
+</table>
+<h2 id="33-数据采集历史记录审核进度">3.3 数据采集历史记录/审核进度</h2>
+<h3 id="331-设计思路">3.3.1 设计思路</h3>
+<p>该功能模块主要功能是让用户查看先前数据采集的相关信息、数据审核进度以及奖励发放情况。</p>
+<h3 id="332-前端功能实现">3.3.2 前端功能实现</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①历史记录总览界面</td>
+<td>进入该功能模块时的界面，展示所有数据采集的历史记录以及每条记录对应的信息（采集时长、审核进度、奖励发放）</td>
+</tr>
+<tr>
+<td>②单一记录查看界面</td>
+<td>在总览界面点击任一记录进行查看，可以看到具体的数据采集信息（采集时长、审核进度、奖励发放），如果有条件，还可以让用户查看数据采集的视频、量表等信息</td>
+</tr>
+</tbody>
+</table>
+<h3 id="333-后端功能实现">3.3.3 后端功能实现</h3>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>具体介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①云端数据库查询</td>
+<td>将云端数据库内的信息按照数据采集时间顺序取出并展示在前端界面上</td>
+</tr>
+</tbody>
+</table>
+<h2 id="34-人格评测目前可省略">3.4 人格评测【目前可省略】</h2>
+<h2 id="35-人格知识科普目前可省略">3.5 人格知识科普【目前可省略】</h2>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://jcxu719.github.io/post/shu-ju-ji-cai-ji-fang-an/">
+                  <h3 class="post-title">
+                    数据集采集方案
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
